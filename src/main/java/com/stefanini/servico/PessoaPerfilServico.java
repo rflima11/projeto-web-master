@@ -35,5 +35,17 @@ public class PessoaPerfilServico implements Serializable{
 	public Optional<List<PessoaPerfil>> listar() {
 		return pessoaPerfilDao.getList();
 	}
+	
+	public PessoaPerfil encontrar(long id) {
+		return pessoaPerfilDao.encontrar(id).get();
+	}
+	
+	public void remover(long id) {
+		pessoaPerfilDao.remover(id);
+	}
+	
+	public PessoaPerfil atualizar(PessoaPerfil pessoa){
+		return pessoaPerfilDao.atualizar(pessoa);
+	}
 
 }

@@ -1,8 +1,9 @@
 package com.stefanini.servico;
 
-import com.stefanini.dao.PessoaDao;
-import com.stefanini.model.Pessoa;
-import com.stefanini.util.IGenericService;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -12,9 +13,10 @@ import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
-import java.io.Serializable;
-import java.util.List;
-import java.util.Optional;
+import com.stefanini.dao.PessoaDao;
+import com.stefanini.dto.PessoaDto;
+import com.stefanini.model.Pessoa;
+import com.stefanini.parsers.PessoaParserDTO;
 
 /**
  * 
@@ -28,19 +30,21 @@ import java.util.Optional;
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class PessoaServico implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	
+	
 	@Inject
 	private PessoaDao dao;
+	
+	@Inject
+	private PessoaParserDTO parser;
 
 	/**
 	 * Salvar os dados de uma Pessoa
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public Pessoa salvar(@Valid Pessoa pessoa) {
-		return dao.salvar(pessoa);
+	public Pessoa salvar(@Valid PessoaDto pessoa) {
+		return dao.salvar(parser.toEntity(pessoa));
 	}
 
 	/**
@@ -48,8 +52,8 @@ public class PessoaServico implements Serializable {
 	 */
 //	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Pessoa atualizar(@Valid Pessoa entity) {
-		return dao.atualizar(entity);
+	public Pessoa atualizar(@Valid PessoaDto pessoa) {
+		return dao.atualizar(parser.toEntity(pessoa));
 	}
 
 	/**
@@ -66,7 +70,8 @@ public class PessoaServico implements Serializable {
 	 */
 //	@Override
 	public Optional<List<Pessoa>> getList() {
-		return dao.getList();
+		List<PessoaDto> pessoas = parser.toDtoList(dao.getList().get());
+		return Optional.of(parser.toEntityList(pessoas));
 	}
 
 	/**
@@ -74,7 +79,8 @@ public class PessoaServico implements Serializable {
 	 */
 //	@Override
 	public Optional<Pessoa> encontrar(Long id) {
-		return dao.encontrar(id);
+		PessoaDto pessoaDto = parser.toDTO(dao.encontrar(id).get());
+		return Optional.of(parser.toEntity(pessoaDto));
 	}
 
 }

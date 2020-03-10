@@ -12,8 +12,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
+import com.stefanini.dto.PessoaDto;
 import com.stefanini.model.Pessoa;
 import com.stefanini.servico.PessoaServico;
 
@@ -31,12 +31,12 @@ public class PessoaResource {
 	}
 
 	@POST
-	public Response salvarPessoa(@Valid Pessoa pessoa) {
+	public Response salvarPessoa(@Valid PessoaDto pessoa) {
 		return Response.ok(pessoaServico.salvar(pessoa)).build();
 	}
 	
 	@PUT
-	public Response alterarPessoa(@Valid Pessoa pessoa) {
+	public Response alterarPessoa(@Valid PessoaDto pessoa) {
 		return Response.ok(pessoaServico.atualizar(pessoa)).build();
 	}
 	
