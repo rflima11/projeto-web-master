@@ -18,11 +18,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * @author joaopedromilhome
@@ -61,6 +60,7 @@ public class Pessoa implements Serializable{
 	 * Email da Pessoa
 	 */
 	@NotNull
+	@Email
 	@Column(name = "DS_EMAIL")
 	private String email;
 	/**
@@ -80,7 +80,7 @@ public class Pessoa implements Serializable{
 	 * Mapeamento de Enderecos Unidirecional
 	 */
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	@JoinColumn(name = "CO_SEQ_PESSOA",referencedColumnName = "CO_SEQ_PESSOA")
 	private Set<Endereco> enderecos;
 
