@@ -10,6 +10,7 @@ public class PessoaPerfil implements Serializable {
 
     @Id
     @Column(name = "co_seq_pessoal_perfil")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
