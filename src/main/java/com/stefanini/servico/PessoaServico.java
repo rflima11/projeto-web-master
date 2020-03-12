@@ -68,11 +68,15 @@ public class PessoaServico implements Serializable {
 	/**
 	 * Buscar uma lista de Pessoa
 	 */
+	
+	
 //	@Override
 	public Optional<List<Pessoa>> getList() {
 		List<PessoaDto> pessoas = parser.toDtoList(dao.getList().get());
 		return Optional.of(parser.toEntityList(pessoas));
 	}
+	
+	
 
 	/**
 	 * Buscar uma Pessoa pelo ID
@@ -81,6 +85,11 @@ public class PessoaServico implements Serializable {
 	public Optional<Pessoa> encontrar(Long id) {
 		PessoaDto pessoaDto = parser.toDTO(dao.encontrar(id).get());
 		return Optional.of(parser.toEntity(pessoaDto));
+	}
+	
+	public Optional<List<Pessoa>> getListParametros(@Valid PessoaDto pessoa) {
+		List<PessoaDto> pessoas = parser.toDtoList(dao.getListParametros("DF").get());
+		return Optional.of(parser.toEntityList(pessoas));
 	}
 
 }

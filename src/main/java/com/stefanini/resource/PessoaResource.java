@@ -53,5 +53,12 @@ public class PessoaResource {
 	public Response obterPessoa(@PathParam("id") Long id) {
 		return Response.ok(pessoaServico.encontrar(id).get()).build();
 	}
+	
+	@GET
+	@Path("parametros")
+	public Response getListAll(@Valid PessoaDto pessoa) {
+		return Response.ok(pessoaServico.getListParametros(pessoa).get()).build();
+	}
+
 
 }
