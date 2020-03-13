@@ -14,6 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.stefanini.dto.PerfilDto;
 import com.stefanini.model.Perfil;
 import com.stefanini.servico.PerfilServico;
 
@@ -52,6 +53,12 @@ public class PerfilResource {
 	@Path("{id}")
 	public Response obterPessoa(@PathParam("id") Long id) {
 		return Response.ok(perfilServico.encontrar(id).get()).build();
+	}
+	
+	@GET
+	@Path("parametros")
+	public Response getListAll(@Valid PerfilDto perfil) {
+		return Response.ok(perfilServico.getListParametros(perfil).get()).build();
 	}
 
 }

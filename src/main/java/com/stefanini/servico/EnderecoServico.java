@@ -1,8 +1,8 @@
 package com.stefanini.servico;
 
-import com.stefanini.dao.EnderecoDao;
-import com.stefanini.model.Endereco;
-import com.stefanini.util.IGenericService;
+import java.io.Serializable;
+import java.util.List;
+import java.util.Optional;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -12,9 +12,11 @@ import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
-import java.io.Serializable;
-import java.util.List;
-import java.util.Optional;
+import com.stefanini.dao.EnderecoDao;
+import com.stefanini.dto.EnderecoDto;
+import com.stefanini.dto.PessoaDto;
+import com.stefanini.model.Endereco;
+import com.stefanini.parsers.EnderecoParserDTO;
 
 /**
  * 
@@ -33,6 +35,9 @@ public class EnderecoServico implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private EnderecoDao dao;
+	
+	@Inject
+	private EnderecoParserDTO parser;
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public Endereco salvar(@Valid Endereco entity) {
@@ -54,5 +59,10 @@ public class EnderecoServico implements Serializable {
 
 	public Optional<Endereco> encontrar(Long id) {
 		return dao.encontrar(id);
+	}
+	
+	public Optional<List<Endereco>> getListParametros(@Valid EnderecoDto endereco) {
+		List<EnderecoDto> enderecos = parser.toDtoList(dao.getListParametros(endereco).get());
+		return Optional.of(parser.toEntityList(enderecos));
 	}
 }

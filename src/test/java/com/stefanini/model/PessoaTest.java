@@ -8,7 +8,6 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
-import org.hibernate.Session;
 import org.junit.Test;
 
 public class PessoaTest {

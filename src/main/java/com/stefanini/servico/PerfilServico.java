@@ -13,7 +13,9 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 
 import com.stefanini.dao.PerfilDao;
+import com.stefanini.dto.PerfilDto;
 import com.stefanini.model.Perfil;
+import com.stefanini.parsers.PerfilParserDTO;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -27,6 +29,10 @@ public class PerfilServico implements Serializable {
 	
 	@Inject
 	private PerfilDao perfilDao;
+	
+	@Inject
+	private PerfilParserDTO parser;
+	
 	
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
@@ -52,5 +58,9 @@ public class PerfilServico implements Serializable {
 		return perfilDao.encontrar(id);
 	}
 
+	public Optional<List<Perfil>> getListParametros(@Valid PerfilDto perfil) {
+		List<PerfilDto> perfils = parser.toDtoList(perfilDao.getListParametros(perfil).get());
+		return Optional.of(parser.toEntityList(perfils));
+	}
 	
 }
