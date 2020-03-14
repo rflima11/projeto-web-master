@@ -61,7 +61,7 @@ public class PessoaPerfilResource {
 	}
 	
 	@ApiOperation(
-			  value = "Atualiza uma associação de pessoa e perfil", 
+			  value = "Atualiza uma associação", 
 			  consumes = MediaType.APPLICATION_JSON, 
 			  produces = MediaType.APPLICATION_JSON)
 	@PUT
