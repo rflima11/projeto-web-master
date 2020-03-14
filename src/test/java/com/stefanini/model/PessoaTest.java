@@ -8,12 +8,10 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
-import org.junit.Test;
 
 public class PessoaTest {
 	
-	
-	String uf = "Rodolfo";
+	String nome = "Rodolfo";
 
 @Inject
 protected EntityManager em;
@@ -27,6 +25,9 @@ protected EntityManager em;
 		
 		return typedQuery.getResultList();
 	}
+	
+	 
+	
 	
 	
 	

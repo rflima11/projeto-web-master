@@ -15,6 +15,10 @@ import javax.ws.rs.core.Response;
 import com.stefanini.model.PessoaPerfil;
 import com.stefanini.servico.PessoaPerfilServico;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api
 @Path(value = "pessoa-perfil")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -24,11 +28,18 @@ public class PessoaPerfilResource {
 	private PessoaPerfilServico pessoaServico;
 
 
+	@ApiOperation(
+			  value = "Lista todos as perfis e pessoas associados", 
+			  produces = MediaType.APPLICATION_JSON)
 	@GET
 	public Response listarPessoaPerfil() {
 		return Response.ok(pessoaServico.listar().get()).build();
 	}
 	
+	@ApiOperation(
+			  value = "Atrela um perfil a uma pessoa", 
+			  consumes = MediaType.APPLICATION_JSON, 
+			  produces = MediaType.APPLICATION_JSON)
 	@POST
 	public Response adicionarPessoaPerfil(PessoaPerfil entity) {
 		return Response.ok(pessoaServico.salvar(entity)).build();
@@ -40,6 +51,8 @@ public class PessoaPerfilResource {
 		return Response.ok(pessoaServico).build();
 	}
 	
+	@ApiOperation(
+			  value = "Deleta uma associação de perfil e ID")
 	@DELETE
 	@Path("{id}")
 	public Response deletarPessoaPerfil(@PathParam("id") long id) {
@@ -47,6 +60,10 @@ public class PessoaPerfilResource {
 		return Response.ok().build();
 	}
 	
+	@ApiOperation(
+			  value = "Atualiza uma associação de pessoa e perfil", 
+			  consumes = MediaType.APPLICATION_JSON, 
+			  produces = MediaType.APPLICATION_JSON)
 	@PUT
 	public Response atualizarPessoaPerfil(PessoaPerfil perfilPessoa) {
 		return Response.ok(pessoaServico.atualizar(perfilPessoa)).build();
